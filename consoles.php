@@ -20,34 +20,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="brand" href="index.php">Video Game Database</a>
+                    <a class="brand" href="#">Video Game Database</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="index.php">Home</a></li>
                             <li><a href="videogame.php">Video Games</a></li>
-                            <li><a href="consoles.php">Consoles</a></li>
+                            <li class="active"><a href="#">Consoles</a></li>
                             <li><a href="studio.php">Studios</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
             </div>
         </div>
-
-        <div class="container">
-
-            <p>This is the final project for CS275.<br>Onward and upward.</p>
-
-        </div> <!-- /container -->
-        <div class="container">
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#">VideoGames</a>
-                </li>
-                <li> 
-                    <a href="#">Game Studios</a>
-                </li>
-        </div>
-
     </body>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="jquery-2.0.0.min.js"></script>
