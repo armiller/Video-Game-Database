@@ -49,6 +49,11 @@
         </div>
         <div class="container content">
             <h1>Test the color!</h1>
+            <?php include('php/MYSQL.php');
+
+            connect_db();
+
+            ?>
 
     </body>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
