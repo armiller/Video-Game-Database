@@ -41,7 +41,7 @@
     </div>
 
     <div class="container">
-      <table class="table">
+      <table class="table table-striped">
         <caption>Video Games</caption>
         <thead>
           <tr>
