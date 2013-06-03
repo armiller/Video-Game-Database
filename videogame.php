@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <!-- Le styles -->
+    
+    <!-- css -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/theme.bootstrap.css" rel="stylesheet">
+    <!-- scripts -->
+    <script src="js/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.js"></script> 
+    <script src="js/jquery.tablesorter.widgets.js"></script>
+    <script src="js/jquery.tablesorter.pager.js"></script>
+    <script type="text/javascript" src="js/table.js"></script>
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -40,22 +47,22 @@
     </div>
 
     <div class="container">
-      <table class="table table-striped">
-        <caption>Video Games</caption>
+      <table>
+        <center><h2>Video Games</h2></center>
         <thead>
           <tr>
             <th>Name</th>
             <th>Rating</th>
+            <th>Game Studio</th>
           </tr>
         </thead>
         <tbody>
-        <?php include_once "php/MYSQL.php";
-
+        <?php 
             ini_set('display_errors',1); 
             error_reporting(E_ALL);
-            echo "hello";
+            include_once("php/MYSQL.php");
             view_all_video_games();
-          ?>
+        ?>
         </tbody>
       </table>
     </div>
@@ -63,7 +70,7 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-2.0.0.min.js"></script>
+    
     <script src="js/bootstrap.min.js"></script>
 
   </body>
