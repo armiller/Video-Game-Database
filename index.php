@@ -42,10 +42,16 @@
 
     <div class="container hero-unit">
 
-      <h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+      <h1>Video Game Database</h1>
+      <p>This database is a collection of video games and information concerning them.</p>
+      <p>Want to insert a new video game?
+        <a class="btn" href="insert.php">Insert</a>
+      </p>
+      
     </div>
 
+    
+ 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

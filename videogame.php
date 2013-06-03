@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -50,10 +49,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-          </tr>
+        <?php include_once "php/MYSQL.php";
+
+            ini_set('display_errors',1); 
+            error_reporting(E_ALL);
+            echo "hello";
+            view_all_video_games();
+          ?>
         </tbody>
       </table>
     </div>
