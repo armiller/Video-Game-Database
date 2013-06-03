@@ -48,8 +48,14 @@
 
     <div class="container">
       <div class="row">
-        <div class="span3">
-          <button class="btn btn-danger">Delete Entry</button>
+        <div class="span4">
+            <a style="float: left;" href="insert.php" class="btn btn-success">Insert a Record</a>
+        </div>
+        <div class="span4">
+            <center><button class="btn btn-warning">Update a Record</button></center>
+        </div>
+        <div class="span4">
+          <button style="float: right;" class="btn btn-danger">Delete A Record</button>
         </div>
       </div>
 
@@ -65,12 +71,6 @@
         </thead>
         <tfoot>
           <tr>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Game Studio</th>
-            <th>Review Score</th>
-          </tr>
-          <tr>
             <th colspan="7" class="pager form-horizontal">
               <button type="button" class="btn first"><i class="icon-step-backward"></i></button>
               <button type="button" class="btn prev"><i class="icon-arrow-left"></i></button>
@@ -84,18 +84,16 @@
                 <option value="40">40</option>
               </select>
               <select class="pagenum input-mini" title="Select page number"></select>
+          </tr>
               <tbody>
         <?php 
             ini_set('display_errors',1); 
             error_reporting(E_ALL);
-            include_once("php/MYSQL.php");
+            include_once("php/mysql.php");
             view_all_video_games();
         ?>
         </tbody>
       </table>
-      <div id="pager" class="pager">
-          <form>
-    </div>
 
     <!-- Le javascript
     ================================================== -->

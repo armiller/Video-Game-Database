@@ -1,3 +1,3 @@
-<?php include_once("MYSQL.php");
+<?php include_once("mysql.php");
 
     echo ""
