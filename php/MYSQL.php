@@ -2,8 +2,6 @@
 
     function db_query($query) {
 
-        connect_db($mysql_handle);
-
         $query_result = mysql_query($query);
 
         if (!$query_result) {
@@ -14,6 +12,8 @@
     }
 
     function view_all_video_games() {
+
+        connect_db($mysql_handle);
 
         $query = "SELECT DISTINCT vg.name, e.rating, gs.name, rs_vg.rating FROM video_game vg
             JOIN esbr e ON vg.esbr_eid = e.eid 
@@ -37,8 +37,70 @@
         close_db();
     }
 
-    function build_insert_options() {
+    function build_game_studio_options() {
 
-        $query = ""
+        connect_db($mysql_handle);
+
+        $query = "SELECT sid, name FROM game_studio ORDER BY name";
+
+        $result = db_query($query);
+
+        while($record = mysql_fetch_array($result)) {
+
+            echo "<option value='".$record[0]."'>".$record[1]."</option>";
+        }
+
+        close_db();
+
+    }
+
+    function build_video_game_options() {
+
+        connect_db($mysql_handle);
+
+        $query = "SELECT gid, name FROM video_game ORDER BY name";
+
+        $result = db_query($query);
+
+        while($record = mysql_fetch_array($result)) {
+
+            echo "<option value='".$record[0]."'>".$record[1]."</option>";
+        }
+
+        close_db();
+    }
+
+    function insert_new_video_game($name, $esbr, $studio) {
+
+        connect_db($mysql_handle);
+        
+        $insert_vg = "INSERT INTO video_game(name, esbr_eid) 
+                    VALUES ('".$name."', ".$esbr.")";
+        
+        $insert_vg_studio = "INSERT INTO video_game_has_game_studio VALUES (LAST_INSERT_ID(), ".$studio.")";
+        
+        db_query("START TRANSACTION");
+        db_query($insert_vg);
+        db_query($insert_vg_studio);
+        db_query("COMMIT"); 
+
+        close_db();
+
+        return true;
+
+    }
+
+    function delete_video_game($id) {
+
+        connect_db($mysql_handle);
+
+        $query = "DELETE FROM video_game WHERE gid = ".$id."";
+
+        db_query($query);
+
+        close_db();
+
+        return true;
+
     }
 ?>

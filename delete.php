@@ -8,12 +8,15 @@
     <meta name="author" content="">
     
     <!-- css -->
+
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/theme.bootstrap.css" rel="stylesheet">
+    <link href="css/select2.css" rel="stylesheet"/>
     <!-- scripts -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-2.0.0.min.js"></script>
     <script src="js/parsley.js"></script>
+    <script src="js/select2.js"></script>
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -31,6 +34,11 @@
         border: 1px solid #EED3D7 !important;
       }
     </style>
+
+    
+    <script>
+        $(document).ready(function() { $("#e1").select2(); });
+    </script>
   </head>
 
   <body>
@@ -57,53 +65,30 @@
     </div>
 
     <div class="container">
-      <form class="form-horizontal" id="insert-game" data-validate="parsley" action="php/__insert_video_game.php" method="post">
-        <legend>Insert New Video Game</legend>
-        
+      <form class="form-horizontal" id="delete-game" action="php/__delete_video_game.php" method="post">
+        <legend>Delete Video Game</legend>
         <div class="control-group">
-          <label class="control-label" for="name">Name</label>
+          <label class="control-label" for="name">Video Game</label>
           <div class="controls">
-          <input placeholder="Name" type="text" id="name" name="name" data-required="true" data-rangelength="[1,40]"/>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="esbr">ESBR Rating</label>
-          <div class="controls">
-              <label class="radio inline">
-                <input type="radio" name="optionRadios" id="esbr_e" value="3" checked>E
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="optionRadios" id="esbr_t" value="2">T
-              </label>
-              <label class="radio inline">
-                <input type="radio" name="optionRadios" id="esbr_m" value="1">M
-              </label>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="game_studio">Game Studio</label>
-          <div class="controls">
-            <select name="gamestudio">
+            <select id="e1" name="id">
             <?php 
-
-              ini_set('display_errors',1); 
+                ini_set('display_errors',1); 
               error_reporting(E_ALL);
-              include_once("php/mysql.php");
 
-              build_game_studio_options()
+                include_once("php/mysql.php");
+                build_video_game_options();
             ?>
-          </select>
+            </select>
           </div>
+        </div>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-danger" id="delete">Delete</button>
         </div>
 
-        <div class="control-group">
-          <label class="control-label"></label>
-          <div class="controls">
-            <button type="submit" class="btn" id="submit">Submit</button>
-          </div>
-        </div>
       </form>
     </div>
-     
-  </body>
+  </div>
+
+</body>
 </html>

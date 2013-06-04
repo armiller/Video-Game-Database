@@ -55,7 +55,7 @@
             <center><button class="btn btn-warning">Update a Record</button></center>
         </div>
         <div class="span4">
-          <button style="float: right;" class="btn btn-danger">Delete A Record</button>
+          <a href="delete.php" style="float: right;" class="btn btn-danger">Delete A Record</a>
         </div>
       </div>
 
