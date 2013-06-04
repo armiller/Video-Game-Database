@@ -51,7 +51,7 @@
         echo "<div class='alert alert-error'>Delete did not work!</div>";
       }
 
-      echo "<div class='alert alert-warning'>Video Game Deleted!</div>";
+      echo "<div class='alert alert-danger'>Video Game Deleted!</div>";
 
 
     ?>

@@ -44,9 +44,15 @@
 
       <h1>Video Game Database</h1>
       <p>This database is a collection of video games and information concerning them.</p>
-      <p>Want to insert a new video game?
-        <a class="btn" href="insert.php">Insert</a>
+      <p>Want to view video games?
+        <a class="btn btn-primary" href="videogame.php">Games</a>
       </p>
+      <p>Want to insert a new video game?
+        <a class="btn btn-success" href="insert.php">Insert</a>
+      </p>
+      <p>Want to delete a video game?
+        <a class="btn btn-danger" href="delete.php">Delete</a>
+      <p>
       
     </div>
 

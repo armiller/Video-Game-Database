@@ -52,7 +52,7 @@
             <a style="float: left;" href="insert.php" class="btn btn-success">Insert a Record</a>
         </div>
         <div class="span4">
-            <center><button class="btn btn-warning">Update a Record</button></center>
+            <center><button class="btn btn-warning disabled">Update a Record</button></center>
         </div>
         <div class="span4">
           <a href="delete.php" style="float: right;" class="btn btn-danger">Delete A Record</a>
