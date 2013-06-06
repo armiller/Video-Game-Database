@@ -13,7 +13,7 @@
 
     function view_all_video_games() {
 
-        connect_db($mysql_handle);
+        connect_db();
 
         $query = "SELECT DISTINCT vg.name, e.rating, gs.name, rs_vg.rating FROM video_game vg
             JOIN esbr e ON vg.esbr_eid = e.eid 
@@ -39,7 +39,7 @@
 
     function build_game_studio_options() {
 
-        connect_db($mysql_handle);
+        connect_db();
 
         $query = "SELECT sid, name FROM game_studio ORDER BY name";
 
@@ -56,7 +56,7 @@
 
     function build_video_game_options() {
 
-        connect_db($mysql_handle);
+        connect_db();
 
         $query = "SELECT gid, name FROM video_game ORDER BY name";
 
@@ -72,7 +72,7 @@
 
     function insert_new_video_game($name, $esbr, $studio) {
 
-        connect_db($mysql_handle);
+        connect_db();
         
         $insert_vg = "INSERT INTO video_game(name, esbr_eid) 
                     VALUES ('".$name."', ".$esbr.")";
@@ -92,7 +92,7 @@
 
     function delete_video_game($id) {
 
-        connect_db($mysql_handle);
+        connect_db();
 
         $query = "DELETE FROM video_game WHERE gid = ".$id."";
 
