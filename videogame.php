@@ -11,11 +11,13 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/theme.bootstrap.css" rel="stylesheet">
     <!-- scripts -->
-    <script src="js/jquery-2.0.0.min.js"></script>
+    <script src="js/jquery-1.10.1.js"></script>
     <script type="text/javascript" src="js/jquery.tablesorter.js"></script> 
     <script src="js/jquery.tablesorter.widgets.js"></script>
     <script src="js/jquery.tablesorter.pager.js"></script>
     <script type="text/javascript" src="js/table.js"></script>
+    
+    <script src="js/bootstrap.js"></script>
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -99,7 +101,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     
-    <script src="js/bootstrap.min.js"></script>
 
   </body>
 </html>

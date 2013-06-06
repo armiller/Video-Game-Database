@@ -13,8 +13,8 @@
     <link href="css/theme.bootstrap.css" rel="stylesheet">
     <link href="css/select2.css" rel="stylesheet"/>
     <!-- scripts -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-2.0.0.min.js"></script>
+    <script src="js/jquery-1.10.1.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/parsley.js"></script>
     <script src="js/select2.js"></script>
     <style>
@@ -37,7 +37,7 @@
 
     
     <script>
-        $(document).ready(function() { $("#e1").select2(); });
+        $(document).ready(function() { $("#e1").select2({ placeholder: "Select a Video Game",width: "element"}); });
     </script>
   </head>
 
@@ -63,19 +63,40 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <?php  ini_set('display_errors',1); 
+              error_reporting(E_ALL);
+            include_once("php/mysql.php");
+          
+          if(isset($_POST['submit'])) {
+
+            if(isset($_POST['id'])) {
+
+              $vg_info = explode(',',$_POST['id']);
+
+              $result = delete_video_game($vg_info);
+
+                echo "<div class='alert alert-danger'>Video Game '".$vg_info[1]."' Deleted!</div>";
+                echo "<center><a href='videogame.php' class='btn btn-primary'>Back to Video Games</a></center>";
+
+            } 
+          }
+          
+
+      ?>
+    </div>
 
     <div class="container">
-      <form class="form-horizontal" id="delete-game" action="php/__delete_video_game.php" method="post">
+      <form class="form-horizontal" id="delete-game" action="delete.php" method="post" data-validate="parsley">
         <legend>Delete Video Game</legend>
         <div class="control-group">
           <label class="control-label" for="name">Video Game</label>
           <div class="controls">
-            <select id="e1" name="id">
+            <select id="e1" name="id" data-required="true">
+              <option></option>
             <?php 
-                ini_set('display_errors',1); 
-              error_reporting(E_ALL);
-
-                include_once("php/mysql.php");
+               
+                
                 build_video_game_options();
             ?>
             </select>
@@ -83,7 +104,7 @@
         </div>
       <div class="control-group">
         <div class="controls">
-          <button type="submit" class="btn btn-danger" id="delete">Delete</button>
+          <button type="submit" class="btn btn-danger" id="delete" name="submit" value="delete">Delete</button>
         </div>
 
       </form>

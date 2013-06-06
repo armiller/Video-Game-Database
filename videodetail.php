@@ -1,4 +1,7 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +20,8 @@
       }
     </style>
   </head>
+
+
 
   <body>
 
@@ -40,34 +45,28 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <?php ini_set('display_errors',1); 
+      error_reporting(E_ALL);
+      include("php/mysql.php");
 
-    <div class="container hero-unit">
+      if(isset($_GET['name'])) {
 
-      <h1>Video Game Database</h1>
-      <p>This database is a collection of video games and information concerning them.</p>
-      <p>Want to view video games?
-        <a class="btn btn-primary" href="videogame.php">Games</a>
-      </p>
-      <p>Want to insert a new video game?
-        <a class="btn btn-success" href="insert.php">Insert</a>
-      </p>
-      <p>Want to delete a video game?
-        <a class="btn btn-danger" href="delete.php">Delete</a>
-      <p>
-      <p>
-        <form method="GET" action="videodetail.php">
-          Name: <input type="text" name="id">
-          <input type="submit">
-        </form>
+        $video_name = $_GET['name'];
 
+        echo "$video_name";
+
+        $query_resut = select_video_game($video_name);
+
+        $row = mysql_fetch_row($query_resut);
+
+        print_r($row);
+      }
+
+      echo "<div class='alert alert-error'>No Video Game Selected!</div>";
+
+      ?>
     </div>
 
-    
- 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    
-
-  </body>
+ </body>
 </html>

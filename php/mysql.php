@@ -2,18 +2,21 @@
 
     function db_query($query) {
 
+        $mysql_handle = connect_db();
+
         $query_result = mysql_query($query);
 
         if (!$query_result) {
-            die('Invalid query : '.$query. '<br>' . mysqli_error($mysql_handle));
+            echo "<div class='alert alert-error'>";
+            echo "Invalid query : ".$query. "<br><br> " . mysql_error($mysql_handle);
+            echo "</div>";
+            die();
         }
 
         return $query_result;
     }
 
     function view_all_video_games() {
-
-        connect_db($mysql_handle);
 
         $query = "SELECT DISTINCT vg.name, e.rating, gs.name, rs_vg.rating FROM video_game vg
             JOIN esbr e ON vg.esbr_eid = e.eid 
@@ -27,19 +30,21 @@
         while ($record = mysql_fetch_array($result)) {
 
             echo "<tr>";
-            echo "<td>".$record[0]."</td>";
+            echo "<td><a href='videodetail.php?name=".$record[0]."'>".$record[0]."</a></td>";
             echo "<td>".$record[1]."</td>";
             echo "<td>".$record[2]."</td>";
             echo "<td>".$record[3]."</td>";
             echo "</tr>\n";
         }
 
+        mysql_free_result($result);
+
         close_db();
     }
 
     function build_game_studio_options() {
 
-        connect_db($mysql_handle);
+        connect_db();
 
         $query = "SELECT sid, name FROM game_studio ORDER BY name";
 
@@ -50,13 +55,15 @@
             echo "<option value='".$record[0]."'>".$record[1]."</option>";
         }
 
+        mysql_free_result($result);
+
         close_db();
 
     }
 
     function build_video_game_options() {
 
-        connect_db($mysql_handle);
+        connect_db();
 
         $query = "SELECT gid, name FROM video_game ORDER BY name";
 
@@ -64,15 +71,17 @@
 
         while($record = mysql_fetch_array($result)) {
 
-            echo "<option value='".$record[0]."'>".$record[1]."</option>";
+            echo "<option value='".$record[0].",".$record[1]."'>".$record[1]."</option>";
         }
+
+        mysql_free_result($result);
 
         close_db();
     }
 
     function insert_new_video_game($name, $esbr, $studio) {
 
-        connect_db($mysql_handle);
+        connect_db();
         
         $insert_vg = "INSERT INTO video_game(name, esbr_eid) 
                     VALUES ('".$name."', ".$esbr.")";
@@ -84,6 +93,8 @@
         db_query($insert_vg_studio);
         db_query("COMMIT"); 
 
+        mysql_free_result($result);
+
         close_db();
 
         return true;
@@ -92,15 +103,37 @@
 
     function delete_video_game($id) {
 
-        connect_db($mysql_handle);
+        connect_db();
 
-        $query = "DELETE FROM video_game WHERE gid = ".$id."";
+        $query = "DELETE FROM video_game WHERE gid = '".$id[0]."'";
 
         db_query($query);
+
+        mysql_free_result($result);
 
         close_db();
 
         return true;
 
+    }
+
+    function select_video_game($name) {
+
+        connect_db();
+
+        $query = "SELECT vg.name, e.rating, gs.name, rs_vg.rating FROM video_game vg
+            JOIN esbr e ON vg.esbr_eid = e.eid 
+            JOIN video_game_has_game_studio vs_gs ON vs_gs.video_game_gid = vg.gid 
+            JOIN game_studio gs ON vs_gs.game_studio_sid = gs.sid
+            LEFT OUTER JOIN review_site_has_video_game rs_vg ON rs_vg.video_game_gid = vg.gid
+            LEFT JOIN video_game_has_device vg_d ON vg_d.video_game_gid = vg.gid 
+            LEFT JOIN device d ON vg_d.device_did = d.did
+            WHERE vg.name = '".$name."'";
+
+        $result = db_query($query);
+
+        close_db();
+
+        return $result;
     }
 ?>

@@ -10,10 +10,12 @@
     <!-- css -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/theme.bootstrap.css" rel="stylesheet">
+    <link href="css/select2.css" rel="stylesheet">
     <!-- scripts -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-2.0.0.min.js"></script>
+    <script src="js/jquery-1.10.1.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/parsley.js"></script>
+    <script src="js/select2.js"></script>
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -31,6 +33,11 @@
         border: 1px solid #EED3D7 !important;
       }
     </style>
+    <script>
+        $(document).ready(function() {  
+          $("#e4").select2({placeholder: "Select a Game Studio"});
+        });
+    </script>
   </head>
 
   <body>
@@ -55,9 +62,34 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <?php  ini_set('display_errors',1); 
+              error_reporting(E_ALL);
+            include_once("php/mysql.php");
+          
+          if(isset($_POST['submit'])) {
+
+            if(isset($_POST['name'])) $vg_name = $_POST['name'];
+            if(isset($_POST['optionRadios'])) $vg_rating = $_POST['optionRadios'];
+            if(isset($_POST['gamestudio'])) $vg_studio = $_POST['gamestudio'];
+
+            $result = insert_new_video_game($vg_name, $vg_rating, $vg_studio);
+
+            if(!$result) {
+
+              echo "<div class='alert alert-error'>Insert did not work!</div>";
+            }
+
+            echo "<div class='alert alert-success'>Video Game '".$vg_name."' added!</div>";
+
+          }
+          
+
+      ?>
+    </div>
 
     <div class="container">
-      <form class="form-horizontal" id="insert-game" data-validate="parsley" action="php/__insert_video_game.php" method="post">
+      <form class="form-horizontal" id="insert-game" data-validate="parsley" action="insert.php" method="post">
         <legend>Insert New Video Game</legend>
         
         <div class="control-group">
@@ -83,12 +115,9 @@
         <div class="control-group">
           <label class="control-label" for="game_studio">Game Studio</label>
           <div class="controls">
-            <select name="gamestudio">
+            <select name="gamestudio" style="width: 300px;" id="e4" data-required="true">
+              <option></option>
             <?php 
-
-              ini_set('display_errors',1); 
-              error_reporting(E_ALL);
-              include_once("php/mysql.php");
 
               build_game_studio_options()
             ?>
@@ -99,7 +128,7 @@
         <div class="control-group">
           <label class="control-label"></label>
           <div class="controls">
-            <button type="submit" class="btn" id="submit">Submit</button>
+            <button type="submit" class="btn" id="submit" name="submit" value="insert">Submit</button>
           </div>
         </div>
       </form>
