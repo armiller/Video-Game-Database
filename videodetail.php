@@ -11,12 +11,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <script src="js/jquery-1.10.1.js"></script>
-    <script src="js/bootstrap.js"></script>
+    
     <!-- Le styles -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="js/bootstrap.js"></script>
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      #info th, #info td { 
+          border-top: none; 
+      }
+      #esbr h4 {
+
+        margin: 0;
       }
     </style>
   </head>
@@ -54,18 +62,52 @@
 
         $video_name = $_GET['name'];
 
-        echo "$video_name";
-
         $query_resut = select_video_game($video_name);
 
-        $row = mysql_fetch_row($query_resut);
-
-        print_r($row);
+        $record = mysql_fetch_array($query_resut);
+        
       }
-
-      echo "<div class='alert alert-error'>No Video Game Selected!</div>";
+      else {
+        echo "<div class='alert alert-error'>No Video Game Selected!</div>";
+      }
+      
 
       ?>
+    </div>
+    <div class="container">
+      <div class="page-header">
+      <?php echo "<h1>".$record[0]."</h1>"; ?>
+    </div>
+      <div class="row-fluid">
+        <div class="span4">
+          <?php if($record[3] == null) {
+            echo "<img src='http://clubworld360.com/data/venues/2286/full_noImage%20-%20Copy%20(2)%20-%20Copy.jpg' class='img-rounded' height='325' width='256'>";
+            }
+          else {
+            echo "<img class='img-rounded' height='325' width='256' src='".$record[3]."'>"; 
+          }
+          ?>
+        </div>
+        <div class="span8">
+          <div id="esbr" class="row-fluid">
+          <div class="span6">
+            <h4>ESBR Rating:</h4>
+            </div>
+            <div class="span6">
+              <h4><?php echo $record[1] ?></h4>
+            </div>
+          </div>
+          <div class="row-fluid">
+          <div class="span6">
+            <h4>Created By:</h4>
+            </div>
+            <div class="span6">
+              <h4><?php echo $record[2] ?></h4>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
  </body>

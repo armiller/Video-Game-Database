@@ -44,8 +44,6 @@
 
     function build_game_studio_options() {
 
-        connect_db();
-
         $query = "SELECT sid, name FROM game_studio ORDER BY name";
 
         $result = db_query($query);
@@ -63,8 +61,6 @@
 
     function build_video_game_options() {
 
-        connect_db();
-
         $query = "SELECT gid, name FROM video_game ORDER BY name";
 
         $result = db_query($query);
@@ -80,8 +76,6 @@
     }
 
     function insert_new_video_game($name, $esbr, $studio) {
-
-        connect_db();
         
         $insert_vg = "INSERT INTO video_game(name, esbr_eid) 
                     VALUES ('".$name."', ".$esbr.")";
@@ -103,8 +97,6 @@
 
     function delete_video_game($id) {
 
-        connect_db();
-
         $query = "DELETE FROM video_game WHERE gid = '".$id[0]."'";
 
         db_query($query);
@@ -119,9 +111,7 @@
 
     function select_video_game($name) {
 
-        connect_db();
-
-        $query = "SELECT vg.name, e.rating, gs.name, rs_vg.rating FROM video_game vg
+        $query = "SELECT vg.name, e.rating, gs.name, vg.img FROM video_game vg
             JOIN esbr e ON vg.esbr_eid = e.eid 
             JOIN video_game_has_game_studio vs_gs ON vs_gs.video_game_gid = vg.gid 
             JOIN game_studio gs ON vs_gs.game_studio_sid = gs.sid
@@ -136,4 +126,5 @@
 
         return $result;
     }
+
 ?>
