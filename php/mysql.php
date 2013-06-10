@@ -42,7 +42,12 @@
         close_db();
     }
 
-    function build_game_studio_options() {
+    function build_game_studio_options($studio) {
+
+       if($studio != null) {
+
+            $query = "SELECT sid, name FROM game_studio WHERE name = '".$studio."'";
+        }
 
         $query = "SELECT sid, name FROM game_studio ORDER BY name";
 
@@ -50,12 +55,21 @@
 
         while($record = mysql_fetch_array($result)) {
 
-            echo "<option value='".$record[0]."'>".$record[1]."</option>";
+            if($record[1] == $studio) {
+
+                echo "<option selected value='".$record[0]."'>".$record[1]."</option>";
+            }
+
+            else {
+
+                echo "<option value='".$record[0]."'>".$record[1]."</option>";
+            }
         }
 
         mysql_free_result($result);
 
         close_db();
+
 
     }
 
@@ -95,7 +109,7 @@
 
     function delete_video_game($id) {
 
-        $query = "DELETE FROM video_game WHERE gid = '".$id[0]."'";
+        $query = "DELETE FROM video_game WHERE gid = '".$id."'";
 
         db_query($query);
 
@@ -121,6 +135,11 @@
         close_db();
 
         return $result;
+    }
+
+    function update_video_game($id) {
+
+        return true;
     }
 
 ?>

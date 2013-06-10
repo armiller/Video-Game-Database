@@ -59,7 +59,9 @@
 
               $vg_info = explode(',',$_POST['id']);
 
-              $result = delete_video_game($vg_info);
+              print_r($vg_info);
+
+              $result = delete_video_game($vg_info[0]);
 
                 echo "<div class='alert alert-danger'>Video Game '".$vg_info[1]."' Deleted!</div>";
                 echo "<center><a href='videogame.php' class='btn btn-primary'>Back to Video Games</a></center>";
