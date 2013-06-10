@@ -15,6 +15,7 @@
     <!-- scripts -->
     <script src="js/jquery-1.10.1.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/parsley.js"></script>
     <script src="js/select2.js"></script>
     <style>
       body {

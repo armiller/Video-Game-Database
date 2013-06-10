@@ -87,8 +87,6 @@
         db_query($insert_vg_studio);
         db_query("COMMIT"); 
 
-        mysql_free_result($result);
-
         close_db();
 
         return true;
@@ -100,8 +98,6 @@
         $query = "DELETE FROM video_game WHERE gid = '".$id[0]."'";
 
         db_query($query);
-
-        mysql_free_result($result);
 
         close_db();
 

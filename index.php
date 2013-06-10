@@ -54,11 +54,6 @@
       <p>Want to delete a video game?
         <a class="btn btn-danger" href="delete.php">Delete</a>
       <p>
-      <p>
-        <form method="GET" action="videodetail.php">
-          Name: <input type="text" name="id">
-          <input type="submit">
-        </form>
 
     </div>
 
