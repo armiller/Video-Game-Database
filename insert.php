@@ -80,7 +80,9 @@
               echo "<div class='alert alert-error'>Insert did not work!</div>";
             }
 
-            echo "<div class='alert alert-success'>Video Game '".$vg_name."' added!</div>";
+            echo "<div class='alert alert-success'>
+                     <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                     Video Game '".$vg_name."' added!</div>";
 
           }
           
@@ -128,7 +130,8 @@
         <div class="control-group">
           <label class="control-label"></label>
           <div class="controls">
-            <button type="submit" class="btn" id="submit" name="submit" value="insert">Submit</button>
+            <button type="submit" class="btn btn-primary" id="submit" name="submit" value="insert">Submit</button>
+            <a href="videogame.php" class="btn">Cancel</a>
           </div>
         </div>
       </form>

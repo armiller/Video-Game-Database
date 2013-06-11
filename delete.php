@@ -57,15 +57,23 @@
 
             if(isset($_POST['id'])) {
 
-              $vg_info = explode(',',$_POST['id']);
-
-              print_r($vg_info);
+              $vg_info = explode(',',$_POST['id']);  
 
               $result = delete_video_game($vg_info[0]);
 
-                echo "<div class='alert alert-danger'>Video Game '".$vg_info[1]."' Deleted!</div>";
-                echo "<center><a href='videogame.php' class='btn btn-primary'>Back to Video Games</a></center>";
+              if(!$result) {
 
+                echo "<div class='alert alert-error'>
+                        <button type='button' class='close' data-dismiss='alert'></button>
+                        Video Game Deletetion failed!
+                      </div>"
+              } else {
+
+                  echo "<div class='alert alert-warning'>
+                  <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                  Video Game '".$vg_info[1]."' Deleted!</div>";
+                echo "<center><a href='videogame.php' class='btn btn-primary'>Back to Video Games</a></center>";
+              }
             } 
           }
           
@@ -82,7 +90,6 @@
             <select style="width: 300px;" id="e1" name="id" data-required="true">
               <option></option>
             <?php 
-               
                 
                 build_video_game_options();
             ?>
@@ -92,6 +99,7 @@
       <div class="control-group">
         <div class="controls">
           <button type="submit" class="btn btn-danger" id="delete" name="submit" value="delete">Delete</button>
+          <a href="videogame.php" class="btn">Cancel</a>
         </div>
 
       </form>

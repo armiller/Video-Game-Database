@@ -42,12 +42,7 @@
         close_db();
     }
 
-    function build_game_studio_options($studio) {
-
-       if($studio != null) {
-
-            $query = "SELECT sid, name FROM game_studio WHERE name = '".$studio."'";
-        }
+    function build_game_studio_options() {
 
         $query = "SELECT sid, name FROM game_studio ORDER BY name";
 
@@ -55,22 +50,12 @@
 
         while($record = mysql_fetch_array($result)) {
 
-            if($record[1] == $studio) {
-
-                echo "<option selected value='".$record[0]."'>".$record[1]."</option>";
-            }
-
-            else {
-
-                echo "<option value='".$record[0]."'>".$record[1]."</option>";
-            }
+            echo "<option value='".$record[0]."'>".$record[1]."</option>";
         }
 
         mysql_free_result($result);
 
         close_db();
-
-
     }
 
     function build_video_game_options() {
@@ -126,8 +111,6 @@
             JOIN video_game_has_game_studio vs_gs ON vs_gs.video_game_gid = vg.gid 
             JOIN game_studio gs ON vs_gs.game_studio_sid = gs.sid
             LEFT OUTER JOIN review_site_has_video_game rs_vg ON rs_vg.video_game_gid = vg.gid
-            LEFT JOIN video_game_has_device vg_d ON vg_d.video_game_gid = vg.gid 
-            LEFT JOIN device d ON vg_d.device_did = d.did
             WHERE vg.name = '".$name."'";
 
         $result = db_query($query);
@@ -137,7 +120,11 @@
         return $result;
     }
 
-    function update_video_game($id) {
+    function update_video_game($name, $rating, $studio) {
+
+        if($name != null) {
+            $video_query = "UPDATE video_game SET ";
+        }
 
         return true;
     }
