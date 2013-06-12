@@ -143,9 +143,16 @@
       </div>
     </div>
     <div class="container" style="margin-top: 30px;">
-      
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="span4">
       <a id="e1" class="btn" <?php if(!isset($button[0])) echo "style='display:none;'"; ?>href="videodetail.php?name=<?php echo $button[0]; ?>">Previous</a>
-      <a id="e2" class="btn" <?php if(!isset($button[1])) echo "style='display:none;'"; ?>href="videodetail.php?name=<?php echo $button[1]; ?>">Next</a>
+      </div>
+      <div class="span3 offset1"><a href="videogame.php" class="btn btn-primary" style="text-align: center;">All Video Games</a></div>
+      <div class="span4"><a id="e2" class="btn" <?php if(!isset($button[1])) echo "style='display:none;'"; ?>href="videodetail.php?name=<?php echo $button[1]; ?>">Next</a>
+        </div>
+        </div>
+      </div>
     </div>
 
  </body>
