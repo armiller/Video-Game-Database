@@ -155,7 +155,7 @@
 
     function select_video_game($name) {
 
-        $query = "SELECT vg.name, e.rating, gs.name, vg.img, vg.gid FROM video_game vg
+        $query = "SELECT vg.name, e.rating, gs.name, vg.img, vg.gid, vg.year_released FROM video_game vg
             JOIN esbr e ON vg.esbr_eid = e.eid 
             JOIN video_game_has_game_studio vs_gs ON vs_gs.video_game_gid = vg.gid 
             JOIN game_studio gs ON vs_gs.game_studio_sid = gs.sid

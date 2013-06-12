@@ -98,10 +98,10 @@
         <div class="span8">
           <div id="esbr" class="row-fluid">
           <div class="span6">
-            <h4>ESBR Rating:</h4>
+            <h4>Year Released:</h4>
             </div>
             <div class="span6">
-              <h4><?php echo $record[1] ?></h4>
+              <h4><?php echo $record[5] ?></h4>
             </div>
           </div>
           <div class="row-fluid">
@@ -112,6 +112,15 @@
               <h4><?php echo $record[2] ?></h4>
             </div>
           </div>
+          <div class="row-fluid">
+          <div class="span6">
+            <h4>ESBR Rating:</h4>
+            </div>
+            <div class="span6">
+              <h4><?php echo $record[1] ?></h4>
+            </div>
+          </div>
+
 
         </div>
         <div class="span8">
