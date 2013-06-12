@@ -54,7 +54,10 @@
       </p>
       <p>Want to delete a video game?
         <a class="btn btn-danger" href="delete.php">Delete</a>
-      <p>
+      </p>
+      <p>Want to update a video game?
+      	<a class="btn btn-warning" href="update.php">Update</a>
+      </p>
 
     </div>
 

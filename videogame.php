@@ -97,6 +97,7 @@
         ?>
         </tbody>
       </table>
+      <div class="alert alert-info">Select the name of a Video Game to bring up more info. You can also sort records by the input box on each individual column</div>
 
     <!-- Le javascript
     ================================================== -->
