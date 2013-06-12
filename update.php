@@ -93,8 +93,6 @@
             if(isset($_POST['devices'])) $vgdevices = $_POST['devices'];
             if(isset($_POST['url'])) $vg_url = $_POST['url'];
 
-            echo $vg_rating;
-
             if($vg_name == null && $vg_year == null && $vg_rating === 0 && $vg_studio == null && $vgdevices == null && $vg_url == null) {
 
               echo "<div class='container'><div class='alert alert-error'>
@@ -192,6 +190,7 @@
               <option></option>
               <?php build_device_options(); ?>
             </select>
+            <span class="help-block"><p class="text-warning">*If You add new devices, the previous devices will be deleted and replaced with the new devices.</span>
           </div>
         </div>
         <div class="control-group">

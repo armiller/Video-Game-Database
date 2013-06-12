@@ -26,6 +26,14 @@
 
         margin: 0;
       }
+      #e1 {
+
+        float: left;
+      }
+      #e2 {
+
+        float: right;
+      }
     </style>
   </head>
 
@@ -44,8 +52,8 @@
           <a class="brand" href="index.php">Game On!</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="index.php">Home</a></li>
-              <li><a href="videogame.php">Video Games</a></li>
+              <li><a href="index.php">Home</a></li>
+              <li class="active"><a href="videogame.php">Video Games</a></li>
               <li><a href="consoles.php">Consoles</a></li>
               <li><a href="studio.php">Studio</a></li>
             </ul>
@@ -65,10 +73,10 @@
 
         $video_name = $_GET['name'];
 
-        $query_resut = select_video_game($video_name);
+        $record = select_video_game($video_name);
 
-        $record = mysql_fetch_array($query_resut);
-        
+        $button = get_next_previous($record[0]);
+
       }
       else {
         echo "<div class='alert alert-error'>No Video Game Selected!</div>";
@@ -80,15 +88,11 @@
     <div class="container">
       <div class="page-header">
       <?php echo "<h1>".$record[0]."</h1>"; ?>
-    </div>
+      </div>
       <div class="row-fluid">
         <div class="span4">
-          <?php if($record[3] == null) {
-            echo "<img src='http://clubworld360.com/data/venues/2286/full_noImage%20-%20Copy%20(2)%20-%20Copy.jpg' class='img-rounded' height='325' width='256'>";
-            }
-          else {
+          <?php
             echo "<img class='img-rounded' height='325' width='256' src='".$record[3]."'>"; 
-          }
           ?>
         </div>
         <div class="span8">
@@ -110,7 +114,31 @@
           </div>
 
         </div>
+        <div class="span8">
+          <div class="row-fluid">
+            <h4>Devices Supported:</h4>
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Year Released</th>
+                  <th>Manufactuer</th>
+                </tr>
+              </thead>  
+              <tbody>
+                <?php get_supported_devices($record[4]); ?>
+              </tbody>
+            </table>
+          </table>
+        
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="container" style="margin-top: 30px;">
+      
+      <a id="e1" class="btn" <?php if(!isset($button[0])) echo "style='display:none;'"; ?>href="videodetail.php?name=<?php echo $button[0]; ?>">Previous</a>
+      <a id="e2" class="btn" <?php if(!isset($button[1])) echo "style='display:none;'"; ?>href="videodetail.php?name=<?php echo $button[1]; ?>">Next</a>
     </div>
 
  </body>

@@ -48,6 +48,8 @@
 
         $result = db_query($query);
 
+        close_db();
+
         return $result;
 
 
@@ -129,9 +131,31 @@
 
     }
 
+    function get_next_previous($name) {
+
+        $results = array();
+
+        $last = "SELECT vg.name FROM video_game vg WHERE vg.name < '".$name."' ORDER BY vg.name DESC LIMIT 1";
+        $next = "SELECT vg.name FROM video_game vg WHERE vg.name > '".$name."' ORDER BY vg.name ASC LIMIT 1";
+
+        $last_result = db_query($last);
+        $next_result = db_query($next);
+
+        $last_name = mysql_fetch_array($last_result);
+        $next_name = mysql_fetch_array($next_result);
+
+        array_push($results, $last_name[0]);
+        array_push($results, $next_name[0]);
+
+        close_db();
+
+        return $results;
+
+    }
+
     function select_video_game($name) {
 
-        $query = "SELECT vg.name, e.rating, gs.name, vg.img FROM video_game vg
+        $query = "SELECT vg.name, e.rating, gs.name, vg.img, vg.gid FROM video_game vg
             JOIN esbr e ON vg.esbr_eid = e.eid 
             JOIN video_game_has_game_studio vs_gs ON vs_gs.video_game_gid = vg.gid 
             JOIN game_studio gs ON vs_gs.game_studio_sid = gs.sid
@@ -140,14 +164,18 @@
 
         $result = db_query($query);
 
+        $query_result = mysql_fetch_array($result);
+
         close_db();
 
-        return $result;
+        return $query_result;
     }
 
     function update_video_game($id, $name, $year, $url, $rating, $studio, $devices) {
 
-        $get_devices = "SELECT d.name FROM device d LEFT JOIN video_game_has_device vd ON d.did = vd.device_did LEFT JOIN video_game vg ON vd.video_game_gid = vg.gid WHERE vg.gid = ".$id."";
+        $get_devices = "SELECT d.name FROM device d 
+                        LEFT JOIN video_game_has_device vd ON d.did = vd.device_did 
+                        LEFT JOIN video_game vg ON vd.video_game_gid = vg.gid WHERE vg.gid = ".$id."";
         $device_results = db_query($get_devices);
         $vg_devices = mysql_fetch_array($device_results);
 
@@ -195,6 +223,8 @@
 
         $result = db_query("COMMIT");
 
+        close_db();
+
         return $result;
     }
 
@@ -210,6 +240,28 @@
         }
 
         mysql_free_result($result);
+
+        close_db();
+
+        return true;
+    }
+
+    function get_supported_devices($id) {
+
+        $query = "SELECT d.name, d.release_date, m.name FROM device d 
+                LEFT JOIN video_game_has_device vd ON d.did = vd.device_did 
+                LEFT JOIN video_game vg ON vd.video_game_gid = vg.gid 
+                JOIN manufacturer m ON m.mid = d.manufacturer_mid
+                WHERE vg.gid = ".$id."";
+
+        $result = db_query($query);
+
+        while($row = mysql_fetch_array($result)) {
+
+            echo "<tr><td>".$row[0]."</td><td>".$row[1]."</td><td>".$row[2]."</td></tr>";
+        }
+
+        close_db();
 
         return true;
     }
