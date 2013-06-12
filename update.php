@@ -73,7 +73,10 @@
                 
           if(isset($_POST['submit'])) {
 
-            if(isset($_POST['id'])) $vg_id = $_POST['id'];
+            if(isset($_POST['id'])) {
+              $vg_info = explode(',',$_POST['id']);  
+              $vg_id = $vg_info[0];
+            }
             if(isset($_POST['name'])) $vg_name = $_POST['name'];
             if(isset($_POST['optionRadios'])) $vg_rating = $_POST['optionRadios'];
             if(isset($_POST['gamestudio'])) $vg_studio = $_POST['gamestudio'];
@@ -89,14 +92,14 @@
 
               if(!$result) {
 
-                echo "<div class='alert alert-error'>
+                echo "<div class='container'><div class='alert alert-error'>
                 <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                Update did not work!</div>";
+                Update did not work!</div></div>";
               } else {
 
-                echo "<div class='alert alert-success'>
+                echo "<div class='container'><div class='alert alert-success'>
                 <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                Video Game ".$vg_name." Updated!</div>";
+                Video Game ".$vg_name." Updated!</div></div>";
               }
 
             }
@@ -131,7 +134,7 @@
           <label class="control-label" for="esbr">ESBR Rating</label>
           <div class="controls">
               <label class="radio inline">
-                <input type="radio" name="optionRadios" id="esbr_e" value="4" checked>Don't Change
+                <input type="radio" name="optionRadios" id="esbr_e" value="0" checked>Don't Change
               </label>
               <label class="radio inline">
                 <input type="radio" name="optionRadios" id="esbr_e" value="3">E

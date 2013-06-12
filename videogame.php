@@ -66,9 +66,9 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Year Released</th>
             <th>Rating</th>
             <th>Game Studio</th>
-            <th>Review Score</th>
           </tr>
         </thead>
         <tfoot>

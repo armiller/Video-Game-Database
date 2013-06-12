@@ -61,19 +61,13 @@
 
               $result = delete_video_game($vg_info[0]);
 
-              if(!$result) {
+                
 
-                echo "<div class='alert alert-error'>
-                        <button type='button' class='close' data-dismiss='alert'></button>
-                        Video Game Deletetion failed!
-                      </div>"
-              } else {
-
-                  echo "<div class='alert alert-warning'>
-                  <button type='button' class='close' data-dismiss='alert'>&times;</button>
-                  Video Game '".$vg_info[1]."' Deleted!</div>";
+                echo "<div class='alert alert-danger'>
+                <button type='button' class='close' data-dismiss='alert'>&times;</button>
+                Video Game '".$vg_info[1]."' Deleted!</div>";
                 echo "<center><a href='videogame.php' class='btn btn-primary'>Back to Video Games</a></center>";
-              }
+
             } 
           }
           

@@ -18,11 +18,10 @@
 
     function view_all_video_games() {
 
-        $query = "SELECT DISTINCT vg.name, e.rating, gs.name, rs_vg.rating FROM video_game vg
+        $query = "SELECT DISTINCT vg.name, vg.year_released, e.rating, gs.name FROM video_game vg
             JOIN esbr e ON vg.esbr_eid = e.eid 
             JOIN video_game_has_game_studio vs_gs ON vs_gs.video_game_gid = vg.gid 
             JOIN game_studio gs ON vs_gs.game_studio_sid = gs.sid
-            LEFT OUTER JOIN review_site_has_video_game rs_vg ON rs_vg.video_game_gid = vg.gid
             GROUP BY vg.name";
 
         $result = db_query($query);
@@ -120,13 +119,30 @@
         return $result;
     }
 
-    function update_video_game($name, $rating, $studio) {
+    function update_video_game($id, $name, $rating, $studio) {
+
+        db_query("START TRANSACTION");
 
         if($name != null) {
-            $video_query = "UPDATE video_game SET ";
+            $video_query = "UPDATE video_game SET name = '".$name."' WHERE gid = ".$id."";
+            db_query($video_query);
         }
 
-        return true;
+        if($rating != null) {
+
+            $rating_query = "UPDATE video_game SET esbr_eid = ".$rating." WHERE gid = ".$id."";
+            db_query($rating_query);
+        }
+
+        if($studio != null) {
+
+            $studio_query = "UPDATE video_game_has_game_studio SET game_studio_sid = ".$studio." WHERE video_game_gid = ".$id."";
+            db_query($studio_query);
+        }
+
+        $result = db_query("COMMIT");
+
+        return $result;
     }
 
 ?>
