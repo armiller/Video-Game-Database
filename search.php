@@ -32,8 +32,6 @@
             <ul class="nav">
               <li class="active"><a href="index.php">Home</a></li>
               <li><a href="videogame.php">Video Games</a></li>
-              <li><a href="consoles.php">Consoles</a></li>
-              <li><a href="studio.php">Studio</a></li>
             </ul>
             <form class="navbar-search pull-right" action="search.php" action="get">
               <input type="text" class="search-query" name="search" placeholder="Search">

@@ -54,8 +54,6 @@
             <ul class="nav">
               <li><a href="index.php">Home</a></li>
               <li class="active"><a href="videogame.php">Video Games</a></li>
-              <li><a href="consoles.php">Consoles</a></li>
-              <li><a href="studio.php">Studio</a></li>
             </ul>
             <form class="navbar-search pull-right" action="search.php" action="get">
               <input type="text" class="search-query" name="search" placeholder="Search">
