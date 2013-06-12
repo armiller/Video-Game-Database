@@ -41,6 +41,9 @@
     </script>
     <script>
         $(document).ready(function() { $("#e1").select2({ placeholder: "Select a Video Game",width: "element"}); });
+        $(document).ready(function () {
+          $("#e5").select2({placeholder: "Select Devices"});
+        });
     </script>
   </head>
 
@@ -62,6 +65,9 @@
               <li><a href="consoles.php">Consoles</a></li>
               <li><a href="studio.php">Studio</a></li>
             </ul>
+           <form class="navbar-search pull-right" action="search.php" action="get">
+              <input type="text" class="search-query" name="search" placeholder="Search">
+            </form>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -77,18 +83,32 @@
               $vg_info = explode(',',$_POST['id']);  
               $vg_id = $vg_info[0];
             }
+
+            $vgdevices = null;
+
             if(isset($_POST['name'])) $vg_name = $_POST['name'];
+            if(isset($_POST['year'])) $vg_year = $_POST['year'];
             if(isset($_POST['optionRadios'])) $vg_rating = $_POST['optionRadios'];
             if(isset($_POST['gamestudio'])) $vg_studio = $_POST['gamestudio'];
+            if(isset($_POST['devices'])) $vgdevices = $_POST['devices'];
+            if(isset($_POST['url'])) $vg_url = $_POST['url'];
 
-            if($vg_name == null && $vg_rating == 4 && $vg_studio == null) {
+            echo $vg_rating;
+
+            if($vg_name == null && $vg_year == null && $vg_rating === 0 && $vg_studio == null && $vgdevices == null && $vg_url == null) {
 
               echo "<div class='container'><div class='alert alert-error'>
               <button type='button' class='close' data-dismiss='alert'>&times;</button>
               No new updates were added. </div></div>";
             } else {
 
-                $result = update_video_game($vg_id,$vg_name,$vg_rating,$vg_studio);
+                if($vg_rating === 0) {
+
+                  $vg_rating = null;
+                }
+              }
+
+                $result = update_video_game($vg_id,$vg_name,$vg_year,$vg_url,$vg_rating,$vg_studio,$vgdevices);
 
               if(!$result) {
 
@@ -103,13 +123,16 @@
               }
 
             }
-          }
 
 
 
     ?>
 
     <div class="container">
+      <div class="alert alert-info">
+        <button type='button' class='close' data-dismiss='alert'>&times;</button>
+        Note: Leave inputs blank that you do not want to change. 
+      </div>
       <form class="form-horizontal" id="delete-game" action="update.php" method="post" data-validate="parsley">
         <legend>Update Video Game</legend>
         <div class="control-group">
@@ -117,10 +140,7 @@
           <div class="controls">
             <select style="width: 300px;" id="e1" name="id" data-required="true">
               <option></option>
-            <?php 
-               
-                build_video_game_options();
-            ?>
+            <?php build_video_game_options(); ?>
             </select>
           </div>
         </div>
@@ -128,6 +148,12 @@
           <label class="control-label" for="name">Name</label>
           <div class="controls">
           <input placeholder="Name" type="text" id="name" name="name" data-rangelength="[2,40]"/>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="name">Year Released</label>
+          <div class="controls">
+          <input placeholder="YYYY" type="text" id="year" name="year" data-type="digits" data-maxlength="4" data-minlength="4"/>
           </div>
         </div>
         <div class="control-group">
@@ -157,6 +183,21 @@
               build_game_studio_options();
             ?>
           </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="devices">Devices Supported</label>
+          <div class="controls">
+            <select multiple name="devices[]" style="width: 300px;" id="e5">
+              <option></option>
+              <?php build_device_options(); ?>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="picture">Image URL</label>
+          <div class="controls">
+            <input class="input-xxlarge" type="text" id="url" name="url" data-type="url" data-maxlength="250"/>
           </div>
         </div>
       <div class="control-group">

@@ -7,9 +7,10 @@
         $query_result = mysql_query($query);
 
         if (!$query_result) {
+            echo "<div class='container'>";
             echo "<div class='alert alert-error'>";
             echo "Invalid query : ".$query. "<br><br> " . mysql_error($mysql_handle);
-            echo "</div>";
+            echo "</div></div>";
             die();
         }
 
@@ -39,6 +40,17 @@
         mysql_free_result($result);
 
         close_db();
+    }
+
+    function search($input) {
+
+        $query = "SELECT name FROM video_game WHERE name like '%".$input."%'";
+
+        $result = db_query($query);
+
+        return $result;
+
+
     }
 
     function build_game_studio_options() {
@@ -73,16 +85,30 @@
         close_db();
     }
 
-    function insert_new_video_game($name, $esbr, $studio) {
-        
-        $insert_vg = "INSERT INTO video_game(name, esbr_eid) 
-                    VALUES ('".$name."', ".$esbr.")";
+    function insert_new_video_game($name, $year, $esbr, $studio, $devices, $url) {
+
+        if ($url == null) {
+
+            $url = "http://cbhighcountry.com/wp-content/themes/CB/images/no_image.jpg";
+        }
+        $insert_vg = "INSERT INTO video_game(name, year_released, img, esbr_eid) 
+                    VALUES ('".$name."', '".$year."', '".$url."', ".$esbr.")";
         
         $insert_vg_studio = "INSERT INTO video_game_has_game_studio VALUES (LAST_INSERT_ID(), ".$studio.")";
         
         db_query("START TRANSACTION");
         db_query($insert_vg);
         db_query($insert_vg_studio);
+
+        if($devices != null) {
+
+            foreach($devices as $device) {
+
+                $insert_device = "INSERT INTO video_game_has_device VALUES (LAST_INSERT_ID(), ".$device.")";
+                db_query($insert_device);
+            }
+        }
+
         db_query("COMMIT"); 
 
         close_db();
@@ -119,16 +145,32 @@
         return $result;
     }
 
-    function update_video_game($id, $name, $rating, $studio) {
+    function update_video_game($id, $name, $year, $url, $rating, $studio, $devices) {
+
+        $get_devices = "SELECT d.name FROM device d LEFT JOIN video_game_has_device vd ON d.did = vd.device_did LEFT JOIN video_game vg ON vd.video_game_gid = vg.gid WHERE vg.gid = ".$id."";
+        $device_results = db_query($get_devices);
+        $vg_devices = mysql_fetch_array($device_results);
 
         db_query("START TRANSACTION");
 
-        if($name != null) {
+        if($name != null && $year != null && $url != null && $rating != 0) {
+
+            $name_year = "UPDATE video_game SET name = '".$name."' 
+            AND year_released = '".$year."' 
+            AND img = '".$url."' AND esbr_eid = ".$rating." WHERE gid = ".$id."";
+            db_query($name_year);
+            
+        } elseif ($name != null) {
+
             $video_query = "UPDATE video_game SET name = '".$name."' WHERE gid = ".$id."";
             db_query($video_query);
-        }
 
-        if($rating != null) {
+        } elseif ($year != null) {
+
+            $year_query = "UPDATE video_game SET year_released = ".$year." WHERE gid = ".$id."";
+            db_query($year_query);
+
+        } elseif($rating != 0) {
 
             $rating_query = "UPDATE video_game SET esbr_eid = ".$rating." WHERE gid = ".$id."";
             db_query($rating_query);
@@ -138,11 +180,38 @@
 
             $studio_query = "UPDATE video_game_has_game_studio SET game_studio_sid = ".$studio." WHERE video_game_gid = ".$id."";
             db_query($studio_query);
+        } 
+
+        if($devices != null) {
+
+            $delete_old_devices = "DELETE FROM video_game_has_device WHERE video_game_has_device.video_game_gid = ".$id."";
+            db_query($delete_old_devices);
+            foreach($devices as $newdevice) {
+
+                $insert_new_device = "INSERT INTO video_game_has_device VALUES (".$id.", $newdevice)";
+                db_query($insert_new_device);
+            }
         }
 
         $result = db_query("COMMIT");
 
         return $result;
+    }
+
+    function build_device_options() {
+
+        $query = "SELECT did, name FROM device";
+
+        $result = db_query($query);
+
+        while($row = mysql_fetch_array($result)) {
+
+            echo "<option value='".$row[0]."'>".$row[1]."</option>";
+        }
+
+        mysql_free_result($result);
+
+        return true;
     }
 
 ?>

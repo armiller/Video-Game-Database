@@ -44,6 +44,9 @@
               <li><a href="consoles.php">Consoles</a></li>
               <li><a href="studio.php">Studio</a></li>
             </ul>
+            <form class="navbar-search pull-right" action="search.php" action="get">
+              <input type="text" class="search-query" name="search" placeholder="Search">
+            </form>
           </div><!--/.nav-collapse -->
         </div>
       </div>

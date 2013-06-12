@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -43,20 +42,29 @@
         </div>
       </div>
     </div>
+    <?php ini_set('display_errors',1); 
+                    error_reporting(E_ALL);
+                    include_once("php/mysql.php"); 
 
-    <div class="container hero-unit">
+                if(isset($_GET['search'])) $input = $_GET['search'];
+    ?>
 
-      <h1>Video Game Database</h1>
-      <p>This database is a collection of video games and information concerning them.</p>
-      <p>Want to view video games?
-        <a class="btn btn-primary" href="videogame.php">Games</a>
-      </p>
-      <p>Want to insert a new video game?
-        <a class="btn btn-success" href="insert.php">Insert</a>
-      </p>
-      <p>Want to delete a video game?
-        <a class="btn btn-danger" href="delete.php">Delete</a>
-      <p>
+    <div class="container">
+      <div class="page-header"><h3>Search Results for "<?php echo $input ?>"<h3></div>
+      <ul class="nav nav-list">
+        <li class="nav-header"><h3>Video Games<h3></li>
+      <?php 
+               $return = search($input);
+
+                while($row = mysql_fetch_array($return)) {
+                  echo "<li><a href='videodetail.php?name=".$row[0]."'><strong>".$row[0]."</strong></a></li>";
+                }
+
+                
+      ?>
+
+      </ul>
+      
 
     </div>
 

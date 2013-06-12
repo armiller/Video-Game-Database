@@ -37,6 +37,9 @@
         $(document).ready(function() {  
           $("#e4").select2({placeholder: "Select a Game Studio"});
         });
+        $(document).ready(function () {
+          $("#e5").select2({placeholder: "Select Devices"});
+        });
     </script>
   </head>
 
@@ -58,6 +61,9 @@
               <li><a href="consoles.php">Consoles</a></li>
               <li><a href="studio.php">Studio</a></li>
             </ul>
+            <form class="navbar-search pull-right" action="search.php" action="get">
+              <input type="text" class="search-query" name="search" placeholder="Search">
+            </form>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -69,11 +75,16 @@
           
           if(isset($_POST['submit'])) {
 
+            $devices = null;
+
             if(isset($_POST['name'])) $vg_name = $_POST['name'];
+            if(isset($_POST['year'])) $vg_year = $_POST['year'];
             if(isset($_POST['optionRadios'])) $vg_rating = $_POST['optionRadios'];
             if(isset($_POST['gamestudio'])) $vg_studio = $_POST['gamestudio'];
+            if(isset($_POST['devices'])) $devices = $_POST['devices'];
+            if(isset($_POST['url'])) $url = $_POST['url'];
 
-            $result = insert_new_video_game($vg_name, $vg_rating, $vg_studio);
+            $result = insert_new_video_game($vg_name, $vg_year, $vg_rating, $vg_studio, $devices, $url);
 
             if(!$result) {
 
@@ -85,8 +96,6 @@
                      Video Game '".$vg_name."' added!</div>";
 
           }
-          
-
       ?>
     </div>
 
@@ -95,13 +104,19 @@
         <legend>Insert New Video Game</legend>
         
         <div class="control-group">
-          <label class="control-label" for="name">Name</label>
+          <label class="control-label" for="name">Name*</label>
           <div class="controls">
           <input placeholder="Name" type="text" id="name" name="name" data-required="true" data-rangelength="[1,40]"/>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="esbr">ESBR Rating</label>
+          <label class="control-label" for="name">Year Released*</label>
+          <div class="controls">
+          <input placeholder="YYYY" type="text" id="year" name="year" data-required="true" data-type="digits" data-maxlength="4" data-minlength="4"/>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="esbr">ESBR Rating*</label>
           <div class="controls">
               <label class="radio inline">
                 <input type="radio" name="optionRadios" id="esbr_e" value="3" checked>E
@@ -115,7 +130,7 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="game_studio">Game Studio</label>
+          <label class="control-label" for="game_studio">Game Studio*</label>
           <div class="controls">
             <select name="gamestudio" style="width: 300px;" id="e4" data-required="true">
               <option></option>
@@ -126,12 +141,29 @@
           </select>
           </div>
         </div>
+        <div class="control-group">
+          <label class="control-label" for="devices">Devices Supported</label>
+          <div class="controls">
+            <select multiple name="devices[]" style="width: 300px;" id="e5">
+              <option></option>
+              <?php build_device_options(); ?>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="picture">Image URL</label>
+          <div class="controls">
+            <input class="input-xxlarge" type="text" id="url" name="url" data-type="url" data-maxlength="250"/>
+          </div>
+        </div>
+
 
         <div class="control-group">
-          <label class="control-label"></label>
           <div class="controls">
             <button type="submit" class="btn btn-primary" id="submit" name="submit" value="insert">Submit</button>
             <a href="videogame.php" class="btn">Cancel</a>
+            <span class="help-block" style="margin-top: 4px;"><small>*required</small></span>
+            
           </div>
         </div>
       </form>
