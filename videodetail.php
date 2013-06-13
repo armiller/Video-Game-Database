@@ -87,7 +87,7 @@
       <div class="page-header">
       <?php echo "<h1>".$record[0]."</h1>"; ?>
       </div>
-      <div class="row-fluid">
+      <div class="row">
         <div class="span4">
           <?php
             echo "<img class='img-rounded' height='325' width='256' src='".$record[3]."'>"; 
@@ -120,8 +120,8 @@
           </div>
 
 
-        </div>
-            <div class="span8">
+    
+            
             <h4>Devices Supported:</h4>
           <table class="table table-striped">
               <thead>
@@ -137,8 +137,9 @@
             </table>
           </table>
         
-          </div>
+         
         </div>
+      </div>
     <div class="container" style="margin-top: 30px;">
       <div class="row-fluid">
         <div class="span12">
