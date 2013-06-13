@@ -121,8 +121,7 @@
 
 
         </div>
-        <div class="span8">
-          <div class="row-fluid">
+            <div class="span8">
             <h4>Devices Supported:</h4>
           <table class="table table-striped">
               <thead>
@@ -140,8 +139,6 @@
         
           </div>
         </div>
-      </div>
-    </div>
     <div class="container" style="margin-top: 30px;">
       <div class="row-fluid">
         <div class="span12">
